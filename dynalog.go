@@ -85,7 +85,7 @@ func main() {
 	// ForceSSL in production
 	r.Use(ForceSSL(Options{
 		SSLProxyHeaders: map[string]string{"X-Forwarded-Proto": "https"},
-		IsDevelopment: gin.Mode() != "RELEASE",
+		IsDevelopment: gin.Mode() != gin.ReleaseMode,
 	}))
 
 	// Basic site placeholder
