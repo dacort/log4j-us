@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +15,10 @@ import (
 type LogProperties struct {
 	Trace []string
 	Debug []string
+}
+
+func (lp LogProperties) any() bool {
+	return len(lp.Trace) != 0 || len(lp.Debug) != 0
 }
 
 func findTemplate(name string) (string, error) {
@@ -40,6 +45,11 @@ func buildLog4j(template string, props LogProperties) ([]byte, error) {
 		return nil, err
 	}
 
+	// If no custom levels are provide, just return the initial file
+	if !props.any() {
+		return data, nil
+	}
+
 	data = append(data, "\n\n## DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 \n"...)
 
 	// Append the different logging types
@@ -57,18 +67,34 @@ func buildLog4j(template string, props LogProperties) ([]byte, error) {
 	return data, nil
 }
 
+func buildLogProperties(c *gin.Context) (LogProperties) {
+	lp := LogProperties{}
+	if len(c.Query("trace")) > 0 {
+		lp.Trace = strings.Split(c.Query("trace"), ",")
+	}
+	if len(c.Query("debug")) > 0 {
+		lp.Debug = strings.Split(c.Query("debug"), ",")
+	}
+
+	return lp
+}
+
 func main() {
 	r := gin.Default()
+
+	// Basic site placeholder
+	r.Use(static.Serve("/", static.LocalFile("./public", true)))
+
+	// Dynamic log builder
 	r.GET("/templates/:name", func(c *gin.Context) {
 		n := c.Param("name")
-		lp := LogProperties{
-			Trace: strings.Split(c.Query("trace"), ","),
-		}
+		lp := buildLogProperties(c)
 		logFile, err := buildLog4j(n, lp)
 		if err != nil {
 			c.String(http.StatusBadRequest, fmt.Sprintf("bad request: %s", err))
 		}
 		c.String(http.StatusOK, string(logFile))
 	})
+
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
