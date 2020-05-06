@@ -3,16 +3,78 @@
     <head>
         <title>log4j.us - Dynamic log4j configurations</title>
 
-        <meta name="description" content="Build dynamic log4j configurations from a simple URL.">
+        <meta name="description" content="Build dynamic log4j configurations from a simple URL">
+
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/skeleton.css">
+        <link rel="stylesheet" href="/css/custom.css">
     </head>
     <body>
-        <h1>log4j.us</h1>
-        <p>
-            Try it out:
-            <ul>
-                <li>TRACE level logging for Metabase query-processor and driver namespaces: <a href="/templates/metabase?trace=metabase.query-processor,metabase.driver">/templates/metabase?trace=metabase.query-processor,metabase.driver</a></li>
-                <li>DEBUG for all: <a href="/templates/consoledebug">/templates/consoledebug</a></li>
-            </ul>
-        </p>
+        <div class="container">
+            <section class="header">
+                <h2 class="title">log4j.us - Dynamic <code>log4j.properties</code></h2>
+                <pre><code>java -Dlog4j.configuration=https://log4j.us/templates/consoledebug -jar app.jar</code></pre>
+            </section>
+            <div class="examples-section">
+                <h6 class="examples-header">Examples</h6>
+                <ul>
+                    <li><code>DEBUG</code> console logging – <a href="/templates/consoledebug">https://log4j.us/templates/consoledebug</a></li>
+                    <pre><code>log4j.rootLogger=DEBUG, console
+
+# log to the console
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target=System.out
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss} \u001b[1m%p %c{2}\u001b[0m :: %m%n</code></pre>
+
+                    <li><code>DEBUG + TRACE</code> level logging – <a href="/templates/consoledebug?trace=some.namespace">https://log4j.us/templates/consoledebug?trace=some.namespace</a></li>
+                    <pre><code>log4j.rootLogger=DEBUG, console
+
+# log to the console
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target=System.out
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss} \u001b[1m%p %c{2}\u001b[0m :: %m%n
+
+## DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 
+log4j.logger.some.namespace=TRACE</code></pre>
+                    <li>Built-in templates – <a href="/templates/metabase?trace=metabase.query-processor,metabase.driver">https://log4j.us/templates/metabase?trace=metabase.query-processor,metabase.driver</a></li>
+                    <pre><code>log4j.rootLogger=WARN, console
+
+# log to the console
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.Target=System.out
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=%d{MM-dd HH:mm:ss} \u001b[1m%p %c{2}\u001b[0m :: %m%n
+
+# log to a file
+log4j.appender.file=org.apache.log4j.RollingFileAppender
+log4j.appender.file.File=${logfile.path}/metabase.log
+log4j.appender.file.MaxFileSize=500MB
+log4j.appender.file.MaxBackupIndex=2
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d [%t] %-5p%c - %m%n
+
+# Default log level for all metabase namespaces is INFO. Default log level for everything else is WARN (see top of file)
+log4j.logger.metabase=INFO
+# For some other Metabase namespaces we want slightly higher log levels for newer/more critical code
+log4j.logger.metabase.plugins=DEBUG
+log4j.logger.metabase.middleware=DEBUG
+
+# TODO - we can dial these back a bit once we are satisfied the async stuff isn't so new (0.33.0+)
+log4j.logger.metabase.async.util=DEBUG
+log4j.logger.metabase.middleware.async=DEBUG
+log4j.logger.metabase.query-processor.async=DEBUG
+
+# c3p0 connection pools tend to log useless warnings way too often; only log actual errors
+log4j.logger.com.mchange=ERROR
+
+## DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 
+log4j.logger.metabase.query-processor=TRACE
+log4j.logger.metabase.driver=TRACE</code></pre>
+                </ul>
+            </div>
+
+        </div>
     </body>
 </html>

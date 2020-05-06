@@ -28,7 +28,6 @@ type secure struct {
 func (s *secure) process(w http.ResponseWriter, r *http.Request) error {
 	// SSL check.
 	if s.opt.IsDevelopment == false {
-		fmt.Println("IsDevelopment is true, checking for redirect")
 		isSSL := false
 		if strings.EqualFold(r.URL.Scheme, "https") || r.TLS != nil {
 			isSSL = true
