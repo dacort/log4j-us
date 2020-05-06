@@ -67,7 +67,7 @@ func buildLog4j(template string, props LogProperties) ([]byte, error) {
 	return data, nil
 }
 
-func buildLogProperties(c *gin.Context) (LogProperties) {
+func buildLogProperties(c *gin.Context) LogProperties {
 	lp := LogProperties{}
 	if len(c.Query("trace")) > 0 {
 		lp.Trace = strings.Split(c.Query("trace"), ",")
@@ -81,6 +81,12 @@ func buildLogProperties(c *gin.Context) (LogProperties) {
 
 func main() {
 	r := gin.Default()
+
+	// ForceSSL in production
+	r.Use(ForceSSL(Options{
+		SSLProxyHeaders: map[string]string{"X-Forwarded-Proto": "https"},
+		IsDevelopment: gin.Mode() != "RELEASE",
+	}))
 
 	// Basic site placeholder
 	r.Use(static.Serve("/", static.LocalFile("./public", true)))
