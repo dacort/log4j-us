@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>log4j.us - Dynamic log4j configurations</title>
+  <head>
+    <title>log4j.us - Dynamic log4j configurations</title>
 
-        <meta name="description" content="Build dynamic log4j configurations from a simple URL">
+    <meta
+      name="description"
+      content="Build dynamic log4j configurations from a simple URL"
+    />
 
-        <link rel="stylesheet" href="/css/normalize.css">
-        <link rel="stylesheet" href="/css/skeleton.css">
-        <link rel="stylesheet" href="/css/custom.css">
-    </head>
-    <body>
-        <div class="container">
-            <section class="header">
-                <h2 class="title">log4j.us - Dynamic <code>log4j.properties</code></h2>
-                <pre><code>java -Dlog4j.configuration=https://log4j.us/templates/consoledebug -jar app.jar</code></pre>
-                <a class="github-button" href="https://github.com/dacort/log4j-us" aria-label="Star dacort/log4j-us on GitHub">Star</a>
-            </section>
-            <div class="examples-section">
-                <h6 class="examples-header">Examples</h6>
-                <ul>
-                    <li><code>DEBUG</code> console logging – <a href="/templates/consoledebug">https://log4j.us/templates/consoledebug</a></li>
-                    <pre><code>log4j.rootLogger=DEBUG, console
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/skeleton.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+  </head>
+  <body>
+    <div class="container">
+      <section class="header">
+        <h2 class="title">log4j.us - Dynamic <code>log4j.properties</code></h2>
+        <pre><code>java -Dlog4j.configuration=https://log4j.us/templates/consoledebug -jar app.jar</code></pre>
+        <a
+          class="github-button"
+          href="https://github.com/dacort/log4j-us"
+          aria-label="Star dacort/log4j-us on GitHub"
+          >Star</a
+        >
+      </section>
+      <div class="examples-section">
+        <h6 class="examples-header">Examples</h6>
+        <ul>
+          <li>
+            <code>DEBUG</code> console logging –
+            <a href="/templates/consoledebug"
+              >https://log4j.us/templates/consoledebug</a
+            >
+          </li>
+          <pre><code>log4j.rootLogger=DEBUG, console
 
 # log to the console
 log4j.appender.console=org.apache.log4j.ConsoleAppender
@@ -28,8 +41,13 @@ log4j.appender.console.Target=System.out
 log4j.appender.console.layout=org.apache.log4j.PatternLayout
 log4j.appender.console.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss} \u001b[1m%p %c{2}\u001b[0m :: %m%n</code></pre>
 
-                    <li><code>DEBUG + TRACE</code> level logging – <a href="/templates/consoledebug?trace=some.namespace">https://log4j.us/templates/consoledebug?trace=some.namespace</a></li>
-                    <pre><code>log4j.rootLogger=DEBUG, console
+          <li>
+            <code>DEBUG + TRACE</code> level logging –
+            <a href="/templates/consoledebug?trace=some.namespace"
+              >https://log4j.us/templates/consoledebug?trace=some.namespace</a
+            >
+          </li>
+          <pre><code>log4j.rootLogger=DEBUG, console
 
 # log to the console
 log4j.appender.console=org.apache.log4j.ConsoleAppender
@@ -39,8 +57,15 @@ log4j.appender.console.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss} \u001b[1
 
 ## DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 
 log4j.logger.some.namespace=TRACE</code></pre>
-                    <li>Built-in templates – <a href="/templates/metabase?trace=metabase.query-processor,metabase.driver">https://log4j.us/templates/metabase?trace=metabase.query-processor,metabase.driver</a></li>
-                    <pre><code>log4j.rootLogger=WARN, console
+          <li>
+            Built-in templates –
+            <a
+              href="/templates/metabase?trace=metabase.query-processor,metabase.driver"
+              >https://log4j.us/templates/metabase?trace=metabase.query-processor,metabase.driver</a
+            >
+          </li>
+          <pre><code>log4j.rootLogger=WARN, console
+log4j.debug=true
 
 # log to the console
 log4j.appender.console=org.apache.log4j.ConsoleAppender
@@ -73,10 +98,9 @@ log4j.logger.com.mchange=ERROR
 ## DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 
 log4j.logger.metabase.query-processor=TRACE
 log4j.logger.metabase.driver=TRACE</code></pre>
-                </ul>
-            </div>
-
-        </div>
-        <script async defer src="https://buttons.github.io/buttons.js"></script>
-    </body>
+        </ul>
+      </div>
+    </div>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
 </html>
