@@ -15,6 +15,10 @@ import (
 type LogProperties struct {
 	Trace []string
 	Debug []string
+	Info []string
+	Warn []string
+	Error [] string
+	Fatal []string
 }
 
 func (lp LogProperties) any() bool {
@@ -31,6 +35,46 @@ func findTemplate(name string) (string, error) {
 		return "", fmt.Errorf("Could not find template `%s`", name)
 	}
 	return matches[0], nil
+}
+
+func addAllLoggingLevels(props LogProperties) (logLines []byte) {
+	// Append the different logging types
+	for _, c := range props.Trace {
+		line := fmt.Sprintf("log4j.logger.%s=TRACE\n", c)
+		logLines = append(logLines, line...)
+	}
+
+	// TODO: DRY this up
+	for _, c := range props.Debug {
+		line := fmt.Sprintf("log4j.logger.%s=DEBUG\n", c)
+		logLines = append(logLines, line...)
+	}
+
+	// TODO: DRY this up
+	for _, c := range props.Info {
+		line := fmt.Sprintf("log4j.logger.%s=INFO\n", c)
+		logLines = append(logLines, line...)
+	}
+
+	// TODO: DRY this up
+	for _, c := range props.Warn {
+		line := fmt.Sprintf("log4j.logger.%s=WARN\n", c)
+		logLines = append(logLines, line...)
+	}
+
+	// TODO: DRY this up
+	for _, c := range props.Error {
+		line := fmt.Sprintf("log4j.logger.%s=ERROR\n", c)
+		logLines = append(logLines, line...)
+	}
+
+	// TODO: DRY this up
+	for _, c := range props.Fatal {
+		line := fmt.Sprintf("log4j.logger.%s=FATAL\n", c)
+		logLines = append(logLines, line...)
+	}
+
+	return logLines
 }
 
 func buildLog4j(template string, props LogProperties) ([]byte, error) {
@@ -51,18 +95,7 @@ func buildLog4j(template string, props LogProperties) ([]byte, error) {
 	}
 
 	data = append(data, "\n\n## DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 \n"...)
-
-	// Append the different logging types
-	for _, c := range props.Trace {
-		line := fmt.Sprintf("log4j.logger.%s=TRACE\n", c)
-		data = append(data, line...)
-	}
-
-	// TODO: DRY this up
-	for _, c := range props.Debug {
-		line := fmt.Sprintf("log4j.logger.%s=DEBUG\n", c)
-		data = append(data, line...)
-	}
+	data = append(data, addAllLoggingLevels(props)...)
 
 	return data, nil
 }
@@ -74,6 +107,18 @@ func buildLogProperties(c *gin.Context) LogProperties {
 	}
 	if len(c.Query("debug")) > 0 {
 		lp.Debug = strings.Split(c.Query("debug"), ",")
+	}
+	if len(c.Query("info")) > 0 {
+		lp.Info = strings.Split(c.Query("info"), ",")
+	}
+	if len(c.Query("warn")) > 0 {
+		lp.Warn = strings.Split(c.Query("warn"), ",")
+	}
+	if len(c.Query("error")) > 0 {
+		lp.Error = strings.Split(c.Query("error"), ",")
+	}
+	if len(c.Query("fatal")) > 0 {
+		lp.Fatal = strings.Split(c.Query("fatal"), ",")
 	}
 
 	return lp
