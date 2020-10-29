@@ -28,10 +28,7 @@
         <h6 class="examples-header">Examples</h6>
         <ul>
           <li>
-            <code>DEBUG</code> console logging –
-            <a href="/templates/consoledebug"
-              >https://log4j.us/templates/consoledebug</a
-            >
+            <code>DEBUG</code> console logging – <a href="/templates/consoledebug">https://log4j.us/templates/consoledebug</a>
           </li>
           <pre><code>log4j.rootLogger=DEBUG, console
 
@@ -42,10 +39,7 @@ log4j.appender.console.layout=org.apache.log4j.PatternLayout
 log4j.appender.console.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss} \u001b[1m%p %c{2}\u001b[0m :: %m%n</code></pre>
 
           <li>
-            <code>DEBUG + TRACE</code> level logging –
-            <a href="/templates/consoledebug?trace=some.namespace"
-              >https://log4j.us/templates/consoledebug?trace=some.namespace</a
-            >
+            <code>DEBUG + TRACE</code> level logging – <a href="/templates/consoledebug?trace=some.namespace">https://log4j.us/templates/consoledebug?trace=some.namespace</a>
           </li>
           <pre><code>log4j.rootLogger=DEBUG, console
 
@@ -59,10 +53,7 @@ log4j.appender.console.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss} \u001b[1
 log4j.logger.some.namespace=TRACE</code></pre>
           <li>
             Built-in templates –
-            <a
-              href="/templates/metabase?trace=metabase.query-processor,metabase.driver"
-              >https://log4j.us/templates/metabase?trace=metabase.query-processor,metabase.driver</a
-            >
+            <a href="/templates/metabase?trace=metabase.query-processor,metabase.driver">https://log4j.us/templates/metabase?trace=metabase.query-processor,metabase.driver</a>
           </li>
           <pre><code>log4j.rootLogger=WARN, console
 log4j.debug=true
@@ -98,6 +89,36 @@ log4j.logger.com.mchange=ERROR
 ## DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 
 log4j.logger.metabase.query-processor=TRACE
 log4j.logger.metabase.driver=TRACE</code></pre>
+
+          <li>
+            Log4j 2 Support – <a href="/v2/templates/metabase?trace=metabase.sync">https://log4j.us/v2/templates/metabase?trace=metabase.sync</a>
+          </li>
+          <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Configuration&gt;
+    &lt;Appenders&gt;
+        &lt;Console name=&quot;STDOUT&quot; target=&quot;SYSTEM_OUT&quot;&gt;
+            &lt;PatternLayout pattern=&quot;%d %p %c{2} :: %m%n&quot;&gt;
+                &lt;replace regex=&quot;:basic-auth \\[.*\\]&quot; replacement=&quot;:basic-auth [redacted]&quot;/&gt;
+            &lt;/PatternLayout&gt;
+        &lt;/Console&gt;
+    &lt;/Appenders&gt;
+
+    &lt;Loggers&gt;
+        &lt;Logger name=&quot;metabase&quot; level=&quot;INFO&quot;/&gt;
+        &lt;Logger name=&quot;metabase.plugins&quot; level=&quot;DEBUG&quot;/&gt;
+        &lt;Logger name=&quot;metabase.middleware&quot; level=&quot;DEBUG&quot;/&gt;
+        &lt;Logger name=&quot;metabase.query-processor.async&quot; level=&quot;DEBUG&quot;/&gt;
+        &lt;Logger name=&quot;com.mchange&quot; level=&quot;ERROR&quot;/&gt;
+        &lt;!-- DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 --&gt;
+        
+        &lt;Logger name=&quot;metabase.sync&quot; level=&quot;TRACE&quot;/&gt;
+        
+
+        &lt;Root level=&quot;WARN&quot;&gt;
+            &lt;AppenderRef ref=&quot;STDOUT&quot;/&gt;
+        &lt;/Root&gt;
+    &lt;/Loggers&gt;
+&lt;/Configuration&gt;</code></pre>
         </ul>
       </div>
     </div>
