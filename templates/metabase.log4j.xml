@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-    <Appenders>
-        <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %p %c{2} :: %m%n">
-                <replace regex=":basic-auth \\[.*\\]" replacement=":basic-auth [redacted]"/>
-            </PatternLayout>
-        </Console>
-    </Appenders>
+  <Appenders>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="%date %level %logger{2} :: %message%n%throwable">
+        <replace regex=":basic-auth \\[.*\\]" replacement=":basic-auth [redacted]"/>
+      </PatternLayout>
+    </Console>
+  </Appenders>
 
-    <Loggers>
-        <Logger name="metabase" level="INFO"/>
-        <Logger name="metabase.plugins" level="DEBUG"/>
-        <Logger name="metabase.middleware" level="DEBUG"/>
-        <Logger name="metabase.query-processor.async" level="DEBUG"/>
-        <Logger name="com.mchange" level="ERROR"/>
-        {{if . }}<!-- DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 -->{{end}}
-        {{range . }}
-        <Logger name="{{ .Name }}" level="{{ .Level | ToUpper }}"/>
-        {{ end }}
+  <Loggers>
+    <Logger name="metabase" level="INFO"/>
+    <Logger name="metabase-enterprise" level="INFO"/>
+    <Logger name="metabase.plugins" level="DEBUG"/>
+    <Logger name="metabase.server.middleware" level="DEBUG"/>
+    <Logger name="metabase.query-processor.async" level="DEBUG"/>
+    <Logger name="com.mchange" level="ERROR"/>
 
-        <Root level="WARN">
-            <AppenderRef ref="STDOUT"/>
-        </Root>
-    </Loggers>
+    {{if . }}<!-- DYNALOG CUSTOM LOGGING LEVELS ENABLED 🚀 -->{{end}}
+    {{range . }}
+    <Logger name="{{ .Name }}" level="{{ .Level | ToUpper }}"/>
+    {{ end }}
+
+    <Root level="WARN">
+      <AppenderRef ref="STDOUT"/>
+    </Root>
+  </Loggers>
 </Configuration>
