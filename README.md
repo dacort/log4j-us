@@ -14,3 +14,16 @@ curl https://log4j.fly.dev/templates/metabase?trace=metabase.query-processor,met
 
 Spits out the [default Metabase](https://raw.githubusercontent.com/metabase/metabase/891e128b1f3dfad7e73250e54108148cba491678/resources/log4j.properties) log4j + `metabase.query-processor` set to trace.
 
+## Deploying
+
+- Make sure `fly` is [installed](https://fly.io/docs/).
+
+```bash
+brew install flyctl
+```
+
+- 🚀
+
+```bash
+fly deploy
+```

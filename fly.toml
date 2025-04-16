@@ -8,6 +8,10 @@ primary_region = "sea"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
 
+[build]
+  [build.args]
+    GO_VERSION = '1.24.1'
+
 [experimental]
   auto_rollback = true
 
