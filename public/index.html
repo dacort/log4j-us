@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>log4j.us - Dynamic log4j configurations</title>
+    <title>DynaLog - Dynamic log4j configurations</title>
 
     <meta
       name="description"
@@ -15,8 +15,8 @@
   <body>
     <div class="container">
       <section class="header">
-        <h2 class="title">log4j.us - Dynamic <code>log4j.properties</code></h2>
-        <pre><code>java -Dlog4j.configuration=https://log4j.us/templates/consoledebug -jar app.jar</code></pre>
+        <h2 class="title">DynaLog - Dynamic <code>log4j.properties</code></h2>
+        <pre><code>java -Dlog4j.configuration=https://log4j.fly.dev/templates/consoledebug -jar app.jar</code></pre>
         <a
           class="github-button"
           href="https://github.com/dacort/log4j-us"
@@ -28,7 +28,7 @@
         <h6 class="examples-header">Examples</h6>
         <ul>
           <li>
-            <code>DEBUG</code> console logging – <a href="/templates/consoledebug">https://log4j.us/templates/consoledebug</a>
+            <code>DEBUG</code> console logging – <a href="/templates/consoledebug">https://log4j.fly.dev/templates/consoledebug</a>
           </li>
           <pre><code>log4j.rootLogger=DEBUG, console
 
@@ -39,7 +39,7 @@ log4j.appender.console.layout=org.apache.log4j.PatternLayout
 log4j.appender.console.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss} \u001b[1m%p %c{2}\u001b[0m :: %m%n</code></pre>
 
           <li>
-            <code>DEBUG + TRACE</code> level logging – <a href="/templates/consoledebug?trace=some.namespace">https://log4j.us/templates/consoledebug?trace=some.namespace</a>
+            <code>DEBUG + TRACE</code> level logging – <a href="/templates/consoledebug?trace=some.namespace">https://log4j.fly.dev/templates/consoledebug?trace=some.namespace</a>
           </li>
           <pre><code>log4j.rootLogger=DEBUG, console
 
@@ -53,7 +53,7 @@ log4j.appender.console.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss} \u001b[1
 log4j.logger.some.namespace=TRACE</code></pre>
           <li>
             Built-in templates –
-            <a href="/templates/metabase?trace=metabase.query-processor,metabase.driver">https://log4j.us/templates/metabase?trace=metabase.query-processor,metabase.driver</a>
+            <a href="/templates/metabase?trace=metabase.query-processor,metabase.driver">https://log4j.fly.dev/templates/metabase?trace=metabase.query-processor,metabase.driver</a>
           </li>
           <pre><code>log4j.rootLogger=WARN, console
 log4j.debug=true
@@ -91,7 +91,7 @@ log4j.logger.metabase.query-processor=TRACE
 log4j.logger.metabase.driver=TRACE</code></pre>
 
           <li>
-            Log4j 2 Support – <a href="/v2/templates/metabase?trace=metabase.sync">https://log4j.us/v2/templates/metabase?trace=metabase.sync</a>
+            Log4j 2 Support – <a href="/v2/templates/metabase?trace=metabase.sync">https://log4j.fly.dev/v2/templates/metabase?trace=metabase.sync</a>
           </li>
           <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;Configuration&gt;

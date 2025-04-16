@@ -9,7 +9,7 @@ People should be able to provide a base log4j template (ala codepen - https://co
 ## Usage
 
 ```shell
-curl https://log4j.us/templates/metabase?trace=metabase.query-processor,metabase.driver
+curl https://log4j.fly.dev/templates/metabase?trace=metabase.query-processor,metabase.driver
 ```
 
 Spits out the [default Metabase](https://raw.githubusercontent.com/metabase/metabase/891e128b1f3dfad7e73250e54108148cba491678/resources/log4j.properties) log4j + `metabase.query-processor` set to trace.
